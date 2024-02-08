@@ -1,0 +1,584 @@
+body {
+    margin: 0;
+    font-family: 'Verdana', sans-serif;
+    overflow: hidden;
+    background-color: #f4f4f4; /* Light background for the whole page */
+}
+/* Initial styles for the logo */
+.logo {
+    position: absolute;
+    bottom: 10px
+    left: 10px;
+    z-index: 1000;
+    border-radius: 15px;
+    padding: 10px 50px;
+    /* Set initial opacity */
+    opacity: 1;
+    /* Other styles like width, height, etc. */
+    width: 275px;
+    height: 100px;
+    /* Set animation properties */
+    animation: fade 3s infinite; /* Change the duration as needed */
+    animation-timing-function: ease-in-out; /* Apply easing for smooth transition */
+}
+.logo[style*="opacity: 0"] {
+    display: none;
+}
+
+/* Create the animation */
+@keyframes fade {
+    0%, 100% {
+        /* At the beginning and end of the animation, keep opacity at 1 */
+        opacity: 1;
+    }
+    50% {
+        /* At 50% of the animation, make the logo gradually disappear */
+        opacity: 0;
+    }
+}
+
+
+#container {
+    position: relative;
+    z-index: 1000;
+}
+
+.custom-zoomout-button {
+  position: relative;
+  z-index: 1000; /* Ensure the button is above the map */
+  cursor: pointer;
+  padding: 8px 7px; /* Adjust padding as needed */
+  border: 1px solid #ccc; /* Button border */
+}
+
+
+#sidebar {
+    position: fixed;
+    overflow-y: auto;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20%;
+    max-width: 300px;
+    z-index: 1000;
+    max-height: 100vh;
+    background-color: #3A7BAA; /* Light background for sidebar */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    padding: 20px;
+    box-sizing: border-box;
+    transform: translateX(100%);
+    transition: transform 0.5s ease;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    text-align: right;
+    border-left: 1px solid #000000;
+}
+
+
+#container.sidebar-collapsed #sidebar {
+    transform: translateX(100%); /* Sidebar is fully hidden to the right */
+}
+#container:not(.sidebar-collapsed) #sidebar {
+    transform: translateX(0); /* Slide sidebar into view */
+}
+
+
+.sidebar-title {
+    font-weight: bold;
+    padding-bottom: 15px;
+    font-size: 26px;
+    text-align: center;
+}
+
+form label {
+    display: block; /* Makes each label a block element, thus taking full width */
+    margin-bottom: 10px; /* Adds space below each label */
+    margin-top: 10px;
+    font-weight: bold; /* Optional: makes label text bold */
+    color: #333; /* Optional: sets a dark color for the label text */
+}
+
+/* Form Field Styles */
+#sidebar input[type="text"], #sidebar input[type="submit"] {
+    width: 100%; /* Full width */
+    padding: 8px 15px;
+    margin: 6px 0;
+    box-sizing: border-box;
+    border: 1px solid #8e939a;
+    border-radius: 4px;
+    text-align: right;
+}
+
+#sidebar input[type="text"]:hover {
+    border-color: #000000; /* Highlight color on focus */
+}
+
+#sidebar input[type="text"]:focus {
+    border-color: #232323; /* Highlight color on focus */
+    background-color: #d4fdef;
+    outline: none;
+}
+
+#sidebar input[type="submit"] {
+    background-color: #3D98DA; /* Primary button color */
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#sidebar input[type="submit"]:hover {
+    background-color: #007c80; /* Darker shade on hover */
+}
+
+#resetFormButton {
+    background-color: #efefef; /* Primary button color */
+    color: #1e1e1e;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%; /* Full width */
+    padding: 8px 15px;
+    box-sizing: border-box;
+    border: 1px solid #393E46;
+    border-radius: 4px;
+    text-align: center;
+}
+
+#resetFormButton:hover {
+    background-color: #b6b6b6; /* Primary button color */
+}
+
+.input-wrapper {
+    position: relative;
+    color: #4286B8;
+    display: inline-block;
+    width: 100%; /* Increase the width of the parent container */
+}
+
+.input-wrapper input[type="text"] {
+    padding-right: 30px; /* Make room for the 'x' button */
+    width: 100%; /* This will now be 100% of the parent's new width */
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#autocomplete-suggestions-street, #autocomplete-suggestions-city {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #f9f9f9; /* Light grey background */
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000; /* Make sure it's above other content */
+    width: calc(100% - 2px); /* Subtract border width */
+    box-sizing: border-box; /* Include padding and borders in the width */
+    text-align: right; /* Align text to the right */
+}
+
+#autocomplete-suggestions-street div, #autocomplete-suggestions-city div {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd; /* Separator line */
+    cursor: pointer;
+}
+
+#autocomplete-suggestions-street div:last-child, #autocomplete-suggestions-city div:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+#autocomplete-suggestions-street div:hover, #autocomplete-suggestions-city div:hover {
+    background-color: #e0e0e0; /* Light grey background on hover */
+}
+
+
+.options-title {
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+.options-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust this gap as needed */
+}
+
+.option-item {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.option-checkbox {
+    margin-right: 10px; /* Space on the right of the checkbox */
+}
+
+.option-item label {
+    margin-left: auto; /* Pushes the label to the left */
+}
+
+
+.custom-zoomout-button {
+  position: absolute;
+  top: 80px; /* Adjust the top position as needed */
+  left: 12px; /* Adjust the left position as needed */
+  width: 32px; /* Adjust the button width */
+  height: 32px; /* Adjust the button height */
+  background-image: url('/static/zoom'); /* Replace with your image path */
+  background-size: cover;
+  border: none; /* Remove button border */
+  cursor: pointer;
+  z-index: 1000; /* Ensure the button is above the map */
+}
+
+
+
+.clear-field {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #000;
+}
+
+.clear-field:hover {
+    color: #666;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    left: -51px; /* Position to the left of the sidebar */
+    top: 50%;
+    transform: translateY(-50%); /* Vertically center the button */
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    line-height: 20px; /* Center the arrow vertically */
+    text-align: center;
+    border-radius: 15px 0 0 15px; /* Rounded on the left side */
+    background-image: none; /* Remove the gradient */
+    background-color: #ffffff;    cursor: pointer;
+    z-index: 1000; /* Ensure it's above the sidebar */
+    color: black; /* Arrow color */
+    font-size: 30px; /* Arrow size */
+    display: flex; /* Using flexbox */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    transition: transform 0.3s ease; /* Transition for the button */
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.sidebar-toggle span {
+    display: block; /* Makes the span a block element to correctly apply transformations */
+    transition: transform 0.3s ease; /* Transition for the arrow */
+}
+
+.sidebar-collapsed #sidebar .sidebar-toggle span {
+    transform: rotate(0deg); /* Rotate arrow back when sidebar is collapsed */
+}
+
+.sidebar-collapsed #sidebar .sidebar-toggle span {
+    transform: rotate(180deg); /* Rotate when sidebar is collapsed */
+}
+
+.sidebar-toggle img {
+    height: 62px;
+    width: 62px;
+}
+
+.sidebar-collapsed #sidebar {
+    transform: translateX(0); /* Slide in when collapsed class is added */
+}
+
+.sidebar-collapsed #sidebar .sidebar-toggle {
+    transform: translateY(-50%); /* Rotate when sidebar is collapsed */
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+    z-index: 998;
+}
+
+.option-button {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #000000;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.option-button:hover {
+    background-color: #d5d5d5;
+}
+
+.option-button.selected {
+    background-color: #00ADB5;
+    border: 2px solid #393E46;
+    padding: 10px;
+    color: #ffffff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.options-title {
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    text-align: right;
+}
+
+.modal-content {
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    text-align: left;
+}
+
+.modal-close-btn {
+    padding: 10px 20px;
+    background-color: #00ADB5; /* Match primary button color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.modal-close-btn:hover {
+    background-color: #08666b;
+
+}
+
+/* Hide the default checkbox */
+.pretty-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+/* Style for the custom checkbox */
+.pretty-checkbox label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+}
+
+/* Adding a custom box */
+.pretty-checkbox label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #9C9C9C;
+    border-radius: 3px;
+    background-color: white;
+}
+
+/* Style when checkbox is checked */
+.pretty-checkbox input[type="checkbox"]:checked + label:before {
+    background-color: #4CAF50;
+    border-color: #17691d;
+}
+
+/* Adding a custom checkmark */
+.pretty-checkbox input[type="checkbox"]:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.popup-content-class {
+    max-height: 300px; /* or any appropriate value */
+    overflow-y: auto; /* This enables vertical scrolling if the content overflows */
+}
+
+.custom-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #f9f9f9; /* Light grey background */
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000; /* Make sure it's above other content */
+}
+
+
+
+.custom-suggestions div {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd; /* Separator line */
+    cursor: pointer;
+}
+
+.custom-suggestions div:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+.custom-suggestions div:hover {
+    background-color: #e0e0e0; /* Light grey background on hover */
+}
+
+
+#buttons-container {
+    display: flex;
+    justify-content: space-between; /* Space out the buttons */
+    margin-top: 20px; /* Space above the button container */
+}
+
+#choose-all-btn {
+    padding: 8px 15px;
+    background-color: #3D98DA; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#choose-all-btn:hover {
+    background-color: #007c80; /* Darker shade on hover */
+}
+
+#clear-all-btn {
+    padding: 8px 15px;
+    background-color: #3D98DA; /* Light background color */
+    color: #333; /* Dark text color */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px; /* Space between buttons */
+}
+
+#clear-all-btn:hover {
+    background-color: #dcdcdc; /* Darker shade on hover */
+}
+
+.square-blue-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: blue;
+    color: black;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 0; /* Square edges */
+    text-align: center; /* Center the text */
+    line-height: 50px; /* Vertically center the text */
+}
+
+#cycle-markers-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color:  #3A7BAA;
+    width: 300px;
+    height: 50px;
+    font-size: larger; /* This will increase the size of the text */
+    padding: 10px; /* Add padding to make the button look larger */
+    color: black;
+}
+/* Style the Image Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top, higher than other elements */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+}
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 75%; /* Adjust the width of the modal */
+    margin: 10vh auto; /* This margin adds space at the top and bottom */
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px; /* Padding inside the modal */
+    max-height: 80vh; /* Adjust the maximum height of the modal */
+}
+
+.modal-content img {
+    max-height: 80vh; /* Adjust the maximum height of the image */
+    max-width: 100%; /* Image width will be a maximum of 100% of its container */
+    object-fit: contain; /* This will make sure that the image maintains its aspect ratio */
+    height: auto; /* Height is automatic, it will be adjusted according to the max-height */
+}
+
+
+
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: -10px; /* Adjust as necessary */
+    right: -10px; /* Adjust as necessary */
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    border-radius: 50%; /* Circular shape */
+    padding: 0 12px; /* Padding to make the circle larger */
+    line-height: normal; /* Reset line-height to normal for the close button */
+}
+
+
+/* styles.css */
+.autocomplete-suggestions {
+    position: absolute;
+    border: 1px solid #999;
+    background: #FFF;
+    padding: 5px;
+    display: none;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.autocomplete-suggestion {
+    padding: 5px;
+    cursor: pointer;
+}
+.autocomplete-suggestion:hover {
+    background-color: #e9e9e9;
+}

@@ -1,0 +1,275 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>פאנל ניהול</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.1.0/simple-lightbox.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.1.0/simple-lightbox.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://www.govmap.gov.il/govmap/api/govmap.api.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+
+</head>
+<body>
+    <div class="logo-container">
+        <img src="/static/logo.png" class="logo">
+    </div>
+
+    <div id="container">
+        <div id="sidebar">
+            <div class="sidebar-title">אפשרויות חיפוש</div>
+            <div>
+                <form action="/geolocation_data_with_photos" method="GET">
+                    <label for="eventNumber">הכנס מספר אירוע</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="eventNumber" name="eventNumber" pattern="[0-9]*" title="יש להכניס מספרים בלבד">
+                        <span class="clear-field">×</span>
+                    </div>
+                    <br><br>
+                    <label for="name">הכנס שם</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name" name="name" list="name-suggestions">
+                        <div id="custom-suggestions" class="custom-suggestions" style="display: none;"></div>
+                        <span class="clear-field">×</span>
+                    </div>
+                    <br><br>
+                    <label for="datetimes">הכנס תאריך</label>
+                    <input type="text" id="datetimes" name="datetimes" />
+                    <br><br>
+                    <div class="pretty-checkbox">
+                        <input type="checkbox" id="allTimes" name="allTimes">
+                        <label for="allTimes">:חיפוש ללא הגבלת זמן</label>
+                    </div>
+
+                    <label for="location">:מיקום</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="location" name="location">
+                        <span class="clear-field">×</span>
+                    </div>
+
+                    <div class="options-title">:בחר אופציות</div>
+                    <div id="option-buttons">
+                        <div id="options-list">
+                            <div class="option-item">
+                                <input type="checkbox" id="option1" class="option-checkbox">
+                                <label for="option1">כלי נשק</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option2" class="option-checkbox">
+                                <label for="option2">רכב</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option3" class="option-checkbox">
+                                <label for="option3">התקן אחסון</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option4" class="option-checkbox">
+                                <label for="option4">מחשב</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option5" class="option-checkbox">
+                                <label for="option5">אחר</label>
+                            </div>
+                             <div id="buttons-container">
+                                <button type="button" id="clear-all-btn">אפס אפשרויות</button>
+                                <button type="button" id="choose-all-btn">בחר הכל</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <input type="submit" value="בצע חיפוש">
+                </form>
+            </div>
+            <div class="sidebar-toggle" onclick="toggleSidebar()"><span><img src="{{ url_for('static', filename='/arrow.png') }}" /></span></div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal" style="display:none;">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+
+    <div id="map">    </div>
+    <button id="cycle-markers-btn">מעבר על הקואורדינטות</button>
+
+
+    <button id="zoom-out-button" class="custom-zoomout-button"></button>
+
+
+    <div id="noDataModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h4>לא נמצאו רשומות</h4>
+            <p>אין מידע העונה לתנאי החיפוש</p>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close-btn" onclick="closeModal()">סגור</button>
+        </div>
+    </div>
+
+    <div id="resetConfirmationModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>האם אתה בטוח שאתה רוצה לאפס את הטופס?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close-btn" onclick="resetForm()">כן</button>
+            <button class="modal-close-btn" onclick="closeResetModal()">לא</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+
+</body>
+</html>
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>פאנל ניהול</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.1.0/simple-lightbox.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.1.0/simple-lightbox.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body>
+    <div class="logo-container">
+        <img src="/static/logo.png" class="logo">
+    </div>
+
+    <div id="container">
+        <div id="sidebar">
+            <div class="sidebar-title">אפשרויות חיפוש</div>
+            <div>
+                <form action="/geolocation_data_with_photos" method="GET">
+                    <label for="eventNumber">הכנס מספר אירוע</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="eventNumber" name="eventNumber" pattern="[0-9]*" title="יש להכניס מספרים בלבד">
+                        <span class="clear-field">×</span>
+                    </div>
+                    <br><br>
+                    <label for="name">הכנס שם</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name" name="name">
+                        <div id="custom-suggestions" class="custom-suggestions" style="display: none;"></div>
+                        <span class="clear-field">×</span>
+                    </div>
+                    <br><br>
+                    <label for="datetimes">הכנס תאריך</label>
+                    <input type="text" id="datetimes" name="datetimes" />
+                    <br><br>
+                    <div class="pretty-checkbox">
+                        <input type="checkbox" id="allTimes" name="allTimes">
+                        <label for="allTimes">:חיפוש ללא הגבלת זמן</label>
+                    </div>
+
+                    <label for="street">:רחוב</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="street" name="street">
+                        <div id="autocomplete-suggestions-street" class="autocomplete-suggestions"></div>
+                        <span class="clear-field">×</span>
+                    </div>
+
+                    <label for="city">:עיר</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="city" name="city">
+                        <div id="autocomplete-suggestions-city" class="autocomplete-suggestions"></div>
+                        <span class="clear-field">×</span>
+                    </div>
+
+                    <div class="options-title">:בחר אופציות</div>
+                    <div id="option-buttons">
+                        <div id="options-list">
+                            <div class="option-item">
+                                <input type="checkbox" id="option1" class="option-checkbox">
+                                <label for="option1">כלי נשק</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option2" class="option-checkbox">
+                                <label for="option2">רכב</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option3" class="option-checkbox">
+                                <label for="option3">התקן אחסון</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option4" class="option-checkbox">
+                                <label for="option4">מחשב</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="option5" class="option-checkbox">
+                                <label for="option5">אחר</label>
+                            </div>
+                             <div id="buttons-container">
+                                <button type="button" id="clear-all-btn">אפס אפשרויות</button>
+                                <button type="button" id="choose-all-btn">בחר הכל</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="button" id="resetFormButton">אפס טופס</button>
+                    <input type="submit" value="בצע חיפוש">
+                </form>
+            </div>
+            <!--<div class="sidebar-toggle" onclick="toggleSidebar()"><span><img src="{{ url_for('static', filename='/arrow.png') }}" /></span></div>-->
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal" style="display:none;">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+
+    <div id="map">    </div>
+    <button id="cycle-markers-btn">מעבר על הקואורדינטות</button>
+
+
+    <button id="zoom-out-button" class="custom-zoomout-button"></button>
+
+
+    <div id="noDataModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h4>לא נמצאו רשומות</h4>
+            <p>אין מידע העונה לתנאי החיפוש</p>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close-btn" onclick="closeModal()">סגור</button>
+        </div>
+    </div>
+
+    <div id="resetConfirmationModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>האם אתה בטוח שאתה רוצה לאפס את הטופס?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close-btn" onclick="resetForm()">כן</button>
+            <button class="modal-close-btn" onclick="closeResetModal()">לא</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+
+</body>
+</html>
